@@ -5,6 +5,8 @@ import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { CalendlyLink } from "./CalendlyLink";
+import { ContactFormTrigger } from "./ContactFormTrigger";
 
 const navLinks = [
   { href: "#problem", label: "Problem" },
@@ -80,7 +82,10 @@ export function Navbar() {
           ))}
         </div>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-3 md:flex">
+          <ContactFormTrigger className="btn-secondary px-4 py-2 text-sm">
+            Contact
+          </ContactFormTrigger>
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -88,9 +93,9 @@ export function Navbar() {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
           >
-            <Link href="#cta" className="btn-primary px-4 py-2 text-sm">
-              Book Demo
-            </Link>
+            <CalendlyLink className="btn-primary px-4 py-2 text-sm">
+              Book a call
+            </CalendlyLink>
           </motion.div>
         </div>
 
@@ -142,18 +147,23 @@ export function Navbar() {
                 ))}
               </div>
               <motion.div
-                className="mt-4 pt-4 border-t border-zinc-800"
+                className="mt-4 flex flex-col gap-3 border-t border-zinc-800 pt-4"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
               >
-                <Link
-                  href="#cta"
+                <ContactFormTrigger
                   onClick={close}
-                  className="btn-primary w-full py-3 text-sm"
+                  className="btn-secondary w-full py-3 text-sm"
                 >
-                  Book Demo
-                </Link>
+                  Contact us
+                </ContactFormTrigger>
+                <CalendlyLink
+                  onClick={close}
+                  className="btn-primary w-full py-3 text-center text-sm"
+                >
+                  Book a call
+                </CalendlyLink>
               </motion.div>
             </motion.div>
           </>

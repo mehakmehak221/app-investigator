@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 import {
   Activity,
   AlertTriangle,
@@ -15,11 +14,9 @@ import {
   Layers,
   LineChart,
   MonitorPlay,
-  Plug,
   Radio,
   Rocket,
   Shield,
-  Smartphone,
   Zap,
 } from "lucide-react";
 import {
@@ -42,6 +39,10 @@ import {
   springEase,
 } from "./animations";
 import { BackToTop } from "./BackToTop";
+import { CalendlyLink } from "./CalendlyLink";
+import { ContactFormProvider } from "./ContactFormProvider";
+import { CtaSection } from "./CtaSection";
+import { ContactFormTrigger } from "./ContactFormTrigger";
 import { Footer } from "./Footer";
 import { Navbar } from "./Navbar";
 import { ScrollProgress } from "./ScrollProgress";
@@ -109,7 +110,7 @@ function ProductImage({
 
 export function LandingPage() {
   return (
-    <>
+    <ContactFormProvider>
       <ScrollProgress />
       <Navbar />
       <main>
@@ -151,14 +152,14 @@ export function LandingPage() {
 
                 <motion.div variants={heroChild} className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
                   <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-                    <Link href="#cta" className="btn-primary px-6 py-3 text-sm">
-                      Book Demo
+                    <CalendlyLink className="btn-primary px-6 py-3 text-sm">
+                      Book a consultation
                       <ChevronRight className="h-4 w-4" />
-                    </Link>
+                    </CalendlyLink>
                   </motion.div>
-                  <Link href="#how-it-works" className="btn-secondary px-6 py-3 text-sm text-center">
-                    How It Works
-                  </Link>
+                  <ContactFormTrigger className="btn-secondary px-6 py-3 text-sm text-center">
+                    Get in touch
+                  </ContactFormTrigger>
                 </motion.div>
               </motion.div>
 
@@ -436,16 +437,17 @@ export function LandingPage() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      <Link
-                        href="#cta"
-                        className={`block w-full text-center ${
-                          plan.highlighted
-                            ? "btn-primary py-2.5 text-sm"
-                            : "btn-secondary py-2.5 text-sm"
-                        }`}
-                      >
-                        Book Demo
-                      </Link>
+                      {plan.highlighted ? (
+                        <CalendlyLink
+                          className="btn-primary block w-full py-2.5 text-center text-sm"
+                        >
+                          Book a call
+                        </CalendlyLink>
+                      ) : (
+                        <ContactFormTrigger className="btn-secondary block w-full py-2.5 text-center text-sm">
+                          Contact us
+                        </ContactFormTrigger>
+                      )}
                     </motion.div>
                   </motion.div>
                 </StaggerItem>
@@ -454,61 +456,10 @@ export function LandingPage() {
           </div>
         </SectionReveal>
 
-        {/* CTA */}
-        <SectionReveal id="cta" className="section pb-24">
-          <div className="mx-auto max-w-6xl px-6">
-            <FadeIn variant="scaleIn">
-              <motion.div
-                className="relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900 px-8 py-16 text-center lg:px-16 lg:py-20"
-                whileHover={{
-                  borderColor: "rgba(99, 102, 241, 0.35)",
-                }}
-              >
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(99,102,241,0.12),transparent_70%)]" />
-                <motion.div
-                  className="relative"
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={heroContainer}
-                >
-                  <motion.div variants={heroChild}>
-                    <motion.div
-                      animate={{ y: [0, -6, 0] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                      <Smartphone className="mx-auto mb-6 h-10 w-10 text-indigo-400" />
-                    </motion.div>
-                  </motion.div>
-                  <motion.h2
-                    variants={heroChild}
-                    className="mx-auto max-w-2xl text-3xl font-semibold text-zinc-50 sm:text-4xl"
-                  >
-                    Your mobile app should fail less and recover faster
-                  </motion.h2>
-                  <motion.p
-                    variants={heroChild}
-                    className="mx-auto mt-4 max-w-xl text-zinc-400"
-                  >
-                    Detect crashes instantly, resolve issues faster and deliver a
-                    stable user experience at scale.
-                  </motion.p>
-                  <motion.div variants={heroChild} className="mt-8">
-                    <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-                      <Link href="#cta" className="btn-primary px-8 py-3 text-sm">
-                        Talk to us
-                        <Plug className="h-4 w-4" />
-                      </Link>
-                    </motion.div>
-                  </motion.div>
-                </motion.div>
-              </motion.div>
-            </FadeIn>
-          </div>
-        </SectionReveal>
+        <CtaSection />
       </main>
       <BackToTop />
       <Footer />
-    </>
+    </ContactFormProvider>
   );
 }
